@@ -178,7 +178,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    msg = (
+    help_message = (
         "📖 **일정 알림 봇 사용법**\n\n"
         "1️⃣ **일정 목록 보기**\n"
         "`/list`\n"
@@ -208,7 +208,13 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "6️⃣ **일정 삭제**\n"
         "`/del 번호`\n"
         "예) `/del 4`\n\n"
-        "7️⃣ **알림 음소거**\n"
+        "7️⃣ **모든 일정 삭제**\n"
+        "`/delall`\n"
+        "모든 일정을 삭제합니다.\n\n"
+        "8️⃣ **지난 일정 초기화**\n"
+        "`/delhistory`\n"
+        "저장된 과거 일정을 모두 삭제합니다.\n\n"
+        "9️⃣ **알림 음소거**\n"
         "`/mute 번호`\n"
         "해당 일정의 알림을 음소거합니다.\n"
         "`/unmute 번호`\n"
@@ -530,7 +536,7 @@ async def delall_confirm_prompt(update: Update, context: ContextTypes.DEFAULT_TY
     context.application.bot_data[f"confirm_action_{chat_id}"] = "delall"
     context.application.bot_data[f"confirm_task_{chat_id}"] = asyncio.create_task(confirm_timeout(chat_id, context))
     await update.message.reply_text(
-        "⚠️ 캘린더의 '앞으로의 이벤트'를 모두 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.\n확인하려면 /ok 를 입력하세요.\n\n⏳ 30초 이내 미응답 시 취소됩니다."
+        "⚠️ 예정 일정을 초기화하시겠습니까?\n이 작업은 되돌릴 수 없습니다.\n확인하려면 /ok 를 입력하세요.\n\n⏳ 30초 이내 미응답 시 취소됩니다."
     )
 
 @admin_only
@@ -542,7 +548,7 @@ async def delhistory_confirm_prompt(update: Update, context: ContextTypes.DEFAUL
     context.application.bot_data[f"confirm_action_{chat_id}"] = "delhistory"
     context.application.bot_data[f"confirm_task_{chat_id}"] = asyncio.create_task(confirm_timeout(chat_id, context))
     await update.message.reply_text(
-        "⚠️ 지난 일정(최근 1년)을 모두 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.\n확인하려면 /ok 를 입력하세요.\n\n⏳ 30초 이내 미응답 시 취소됩니다."
+        "⚠️ 지난 일정을 초기화하시겠습니까?\n이 작업은 되돌릴 수 없습니다.\n확인하려면 /ok 를 입력하세요.\n\n⏳ 30초 이내 미응답 시 취소됩니다."
     )
 
 async def confirm_timeout(chat_id, context):
