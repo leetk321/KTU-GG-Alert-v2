@@ -178,7 +178,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    help_message = (
+    msg = (
         "📖 **일정 알림 봇 사용법**\n\n"
         "1️⃣ **일정 목록 보기**\n"
         "`/list`\n"
