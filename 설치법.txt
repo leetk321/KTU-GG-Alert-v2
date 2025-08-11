@@ -1,0 +1,45 @@
+<설치 방법>
+
+1) Google Cloud 콘솔에서 API 준비
+프로젝트 만들기
+Google Cloud Console → 새 프로젝트 생성.
+
+API 사용 설정
+“API 및 서비스 → 라이브러리”에서
+
+Google Calendar API 사용
+
+(Sheets 버전도 쓸 거면 Google Sheets API도 사용)
+
+서비스 계정 생성
+“IAM 및 관리자 → 서비스 계정” → 새 서비스 계정 생성 → 키 JSON 다운로드.
+이 파일을 서버에 저장(예: /app/service_account.json).
+
+2) 캘린더 공유(가장 중요)
+구글 캘린더 웹 → 설정(톱니바퀴) → 설정 → 해당 캘린더 선택 → 특정 사용자와 공유
+
+서비스 계정 이메일을 추가하고 권한을 “일정 변경 가능” 이상으로 부여.
+(이걸 안 하면 insert/patch/delete가 403 납니다.)
+
+3) 캘린더 ID 확인
+같은 설정 화면 하단 캘린더 통합 → 캘린더 ID 복사
+(형식: xxxxx@group.calendar.google.com)
+
+테스트로 primary도 가능하지만, 운영은 별도 캘린더 권장.
+
+4) 서버에 환경 변수 준비(.env 예시)
+
+TELEGRAM_BOT_TOKEN=123456:ABC-DEF...
+GOOGLE_APPLICATION_CREDENTIALS=/app/service_account.json
+CALENDAR_ID=xxxxx@group.calendar.google.com
+ADMIN_PASSWORD=0000
+TZ=Asia/Seoul
+
+5) 의존성 설치
+
+cd 명령어 사용하여 해당 경로로 이동하고, Dockerfile과 requirements.txt를 활용하여 설치하는 방식
+
+ssh 접속 후 아래 명령어 입력
+docker build -t my-tg-bot:latest .
+
+

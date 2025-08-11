@@ -1,0 +1,7 @@
+pip==25.2
+python-telegram-bot==21.9
+pytz==2024.2
+telegram==0.0.1
+google-api-python-client
+google-auth
+google-auth-oauthlib
